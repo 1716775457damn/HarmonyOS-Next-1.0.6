@@ -1,107 +1,106 @@
-//while 循环
-//示例1：打印1到50的数字
 @Entry
 @Component
 struct Index {
-  build() {
-    let count: number = 1;
-    while (count <= 50) {
-      console.log('当前数字:', count);
-      count++;
-    }
-  }
-}
-//示例2：找出1到50中所有能被3整除的数字
-@Entry
-@Component
-struct Index {
-  build() {
-    let count: number = 1;
-    while (count <= 50) {
-      if (count % 3 === 0) {
-        console.log('能被3整除的数字:', count);
-      }
-      count++;
-    }
-  }
-}
+  @State numbers: string = ''
+  @State primeNumbers: string = ''
+  @State dumplingStatus: string = ''
 
+  build() {
+    Column() {
+      // 页面标题
+      Text('循环语句示例')
+        .fontSize(24)
+        .fontWeight(FontWeight.Bold)
+        .margin({ top: 20, bottom: 20 })
 
-///////////////////////////////////////////////////////////////
-//for 循环
-@Entry
-@Component
-struct Index {
-  build() {
-    for (let i: number = 1; i <= 20; i++) {
-      console.log('for循环:', i);
-    }
-  }
-}
+      // 示例1：计数器和3的倍数
+      Button("运行示例1")
+        .onClick(() => {
+          let result: number[] = []
+          let divisibleBy3: number[] = []
+          let count = 1
+          while (count <= 50) {
+            result.push(count)
+            if (count % 3 === 0) {
+              divisibleBy3.push(count)
+            }
+            count++
+          }
+          this.numbers = `数字序列: ${result.join(', ')}\n3的倍数: ${divisibleBy3.join(', ')}`
+        })
+        .width('80%')
+        .height(40)
+        .backgroundColor('#007DFF')
+        .margin(10)
 
-//
-@Entry
-@Component
-struct Index {
-  build() {
-    let sum: number = 0;
-    for (let i: number = 1; i <= 20; i++) {
-      console.log('for循环:', i);
-      sum += i;
-    }
-    console.log('1到20的和:', sum);
-  }
-}
+      Text(this.numbers)
+        .margin(10)
+        .padding(10)
+        .textAlign(TextAlign.Start)
+        .backgroundColor('#F5F5F5')
+        .borderRadius(8)
+        .width('90%')
 
+      // 示例2：寻找素数
+      Button("查找素数")
+        .onClick(() => {
+          let primes: number[] = []
+          for (let num = 2; num <= 100; num++) {
+            let isPrime = true
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+              if (num % i === 0) {
+                isPrime = false
+                break
+              }
+            }
+            if (isPrime) {
+              primes.push(num)
+            }
+          }
+          this.primeNumbers = `100以内的素数: ${primes.join(', ')}`
+        })
+        .width('80%')
+        .height(40)
+        .backgroundColor('#007DFF')
+        .margin(10)
 
-////////////////////////////////////////////
-//break 和 continue
-@Entry
-@Component
-struct Index {
-  build() {
-    for (let i: number = 1; i <= 8; i++) {
-      if (i === 5) {
-        console.log('吃到第5个饺子，饱了');
-        break; // 终止循环
-      }
-      console.log('吃饺子:', `第${i}个`);
+      Text(this.primeNumbers)
+        .margin(10)
+        .padding(10)
+        .textAlign(TextAlign.Start)
+        .backgroundColor('#F5F5F5')
+        .borderRadius(8)
+        .width('90%')
+
+      // 示例3：饺子循环演示
+      Button("吃饺子示例")
+        .onClick(() => {
+          let status: string[] = []
+          for (let i = 1; i <= 8; i++) {
+            if (i === 5) {
+              status.push('第5个饺子坏了，跳过')
+              continue
+            }
+            status.push(`吃掉第${i}个饺子`)
+          }
+          this.dumplingStatus = status.join('\n')
+        })
+        .width('80%')
+        .height(40)
+        .backgroundColor('#007DFF')
+        .margin(10)
+
+      Text(this.dumplingStatus)
+        .margin(10)
+        .padding(10)
+        .textAlign(TextAlign.Start)
+        .backgroundColor('#F5F5F5')
+        .borderRadius(8)
+        .width('90%')
     }
-    console.log('离开餐桌');
-  }
-}
-//
-@Entry
-@Component
-struct Index {
-  build() {
-    for (let i: number = 1; i <= 8; i++) {
-      if (i === 5) {
-        console.log('第5个饺子坏了，不吃了');
-        continue; // 跳过本次循环
-      }
-      console.log('吃饺子:', `第${i}个`);
-    }
-  }
-}
-//
-@Entry
-@Component
-struct Index {
-  build() {
-    let isPrime: boolean;
-    for (let num: number = 2; num <= 100; num++) {
-      isPrime = true;
-      for (let i: number = 2; i <= Math.sqrt(num); i++) {
-        if (num % i === 0) {
-          isPrime = false;
-          break;
-        }
-      }
-      if (isPrime) {
-        console.log('素数:', num);
-      }
-    }
+    .width('100%')
+    .height('100%')
+    .backgroundColor('#FFFFFF')
   }
 }
 
